@@ -38,4 +38,6 @@ public class TaskGroup {
     @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true) //
     @Column(name = "task_group_tasks")
     private List<Task> tasks = new ArrayList<>();
+
+    // Constructor for creating a TaskGroup with a board
 }
