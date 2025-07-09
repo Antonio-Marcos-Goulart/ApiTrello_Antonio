@@ -16,42 +16,43 @@ public class TaskGroupService {
         this.taskGroupRepository = taskGroupRepository;
         this.boardRepository = boardRepository;
     }
-    // Create new Task Group
+
+    // Criar um grupo de tarefas
     public TaskGroup createTask(TaskGroup taskGroup){
         if (taskGroup.getTaskGroupName() == null || taskGroup.getTaskGroupName().length() < 3) {
-            throw new IllegalArgumentException("Task group name must be at least 3 characters long");
+            throw new IllegalArgumentException("O nome do grupo de tarefas deve ter pelo menos 3 caracteres");
         }
         if (taskGroup.getBoard() == null) {
-            throw new IllegalArgumentException("Board cannot be null");
+            throw new IllegalArgumentException("Board não pode ser nulo");
         }
         Long boardId = taskGroup.getBoard().getBoardId();
-        System.out.println("Board ID recebido: " + boardId); // log para debug
+        System.out.println("Board ID recebido: " + boardId); // log para debug - imprime o valor do boardId no console em tempo de execução
         if (boardId == null) {
-            throw new IllegalArgumentException("Board ID cannot be null");
+            throw new IllegalArgumentException("Board Id não pode ser nulo");
         }
         boolean exists = boardRepository.existsById(boardId);
-        System.out.println("Board existe no repo? " + exists); // log para debug
+        System.out.println("Board existe no repository? " + exists); // log para debug - imprime se o board existe no repository
         if (!exists) {
-            throw new IllegalArgumentException("Board does not valid");
+            throw new IllegalArgumentException("Board não é válido");
         }
         return taskGroupRepository.save(taskGroup);
     }
 
-    // Get task group by id
+    // Obter grupo de tarefas pelo ID
     public TaskGroup getTaskServiceById(Long id) {
         return taskGroupRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Task group not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Grupo de tarefas não encontrado com id: " + id));
     }
 
-    // Get all task groups frm the database
+    // Obter todos os grupos de tarefas do banco de dados
     public List<TaskGroup> getAllTaskGroups() {
         return taskGroupRepository.findAll();
     }
 
-    // Update the task group
+    // Atualizar o grupo de tarefas
     public TaskGroup updateTaskGroup(Long id, TaskGroup updatedTaskGroup) {
         TaskGroup existingTaskGroup = taskGroupRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Task group not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Grupo de tarefas não encontrado com id: " + id));
 
         if (updatedTaskGroup.getTaskGroupName() != null && !updatedTaskGroup.getTaskGroupName().isEmpty()) {
             existingTaskGroup.setTaskGroupName(updatedTaskGroup.getTaskGroupName());
@@ -60,17 +61,17 @@ public class TaskGroupService {
         if (updatedTaskGroup.getBoard() != null) {
             boolean exists = boardRepository.existsById(updatedTaskGroup.getBoard().getBoardId());
             if (!exists) {
-                throw new IllegalArgumentException("Board does not valid");
+                throw new IllegalArgumentException("Board não é válido");
             }
             existingTaskGroup.setBoard(updatedTaskGroup.getBoard());
         }
         return taskGroupRepository.save(existingTaskGroup);
     }
 
-    // Delete the task group and verify if it exists
+    // Deletar o grupo de tarefas e ver se ele existe
     public void deleteTaskGroup(Long taskGroupId) {
         if (!taskGroupRepository.existsById(taskGroupId)) {
-            throw new IllegalArgumentException("Task group not found with id: " + taskGroupId);
+            throw new IllegalArgumentException("Grupo de tarefas não encontrado com id: " + taskGroupId);
         }
         taskGroupRepository.deleteById(taskGroupId);
     }

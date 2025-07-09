@@ -27,7 +27,7 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // Obtém a tarefa pelo ID
     public Task getTaskById(@PathVariable Long id){
         return taskService.getTaskById(id);
     }
@@ -38,7 +38,7 @@ public class TaskController {
         return taskService.updateTask(id, updateTask);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // Deleta a tarefa com o ID especificado
     public String deleteTask(@PathVariable Long id){
         taskService.deteteTask(id);
         return "Task com id: " + id + " deletada com sucesso";

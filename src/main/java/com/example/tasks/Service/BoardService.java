@@ -14,28 +14,28 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    // Create a new board
+    // Criar um Board
     public Board createBoard(Board board) {
         if (board.getBoardName() == null || board.getBoardName().length() < 3) {
-            throw new IllegalArgumentException("Board name must be at least 3 characters long");
+            throw new IllegalArgumentException("O nome do Board deve ter pelo menos 3 caracteres");
         }
         return boardRepository.save(board);
     }
 
     public Board getBoardById(Long id) {
         return boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Board not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Board não encontrado com id: " + id));
     }
 
-    // Get all boards from the database
+    // Obter todos os Boards do banco de dados
     public List<Board> getAllBoards() {
         return boardRepository.findAll();
     }
 
-    // Update the board
+    // Atualizar o Board
     public Board updateBoard(Long id, Board updatedBoard) {
         Board existingBoard = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Board not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Board não encontrado com id: " + id));
 
         if (updatedBoard.getBoardName() != null && !updatedBoard.getBoardName().isEmpty()) {
             existingBoard.setBoardName(updatedBoard.getBoardName());
@@ -46,10 +46,11 @@ public class BoardService {
         }
         return boardRepository.save(existingBoard);
     }
-    // Delete board
+
+    // Deletar o Board
     public void deleteBoard (Long boardId) {
         if (!boardRepository.existsById(boardId)){
-            throw new IllegalArgumentException("Board not found with id: " + boardId);
+            throw new IllegalArgumentException("Board não encontrado com id: " + boardId);
         }
         boardRepository.deleteById(boardId);
     }

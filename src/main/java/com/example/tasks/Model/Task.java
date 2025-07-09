@@ -25,7 +25,7 @@ public class Task {
     private Long taskId;
 
     @NotEmpty
-    @Size(min = 3, max = 100, message = "The title must be between 3 and 100 characters")
+    @Size(min = 3, max = 100, message = "O título deve ter entre 3 e 100 caracteres")
     @Column(name = "task_title")
     private String taskTitle;
 

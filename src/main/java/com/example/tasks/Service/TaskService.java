@@ -17,62 +17,62 @@ public class TaskService {
         this.taskGroupRepository = taskGroupRepository;
     }
 
-    // Create a new task
+    // Cria uma tarefa
     public Task createTask(Task task) {
         if (task.getTaskTitle() == null || task.getTaskTitle().length() < 3) {
-            throw new IllegalArgumentException("Task name must be at least 3 characters long");
+            throw new IllegalArgumentException("O nome da tarefa deve ter pelo menos 3 caracteres");
         }
 
         if (task.getTaskStatus() == null) {
-            throw new IllegalArgumentException("Task status cannot be null");
+            throw new IllegalArgumentException("O status da tarefa não pode ser nulo");
         }
 
         boolean exists = taskGroupRepository.existsById(task.getTaskGroup().getTaskGroupId());
         if (!exists) {
-            throw new IllegalArgumentException("Task group does not valid");
+            throw new IllegalArgumentException("Grupo de tarefas não válido");
         }
 
         return taskRepository.save(task);
     }
 
-    // Retrieve a task by ID
+    // Obtém a tarefa pelo ID
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Taks not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada com id: " + id));
     }
 
-    // Get all tasks from the database
+    // Obtém todas as tarefas do banco de dados
     public List<Task> getAllTasks() {
         return taskRepository.findAll(); 
     }
 
-    // Update the task
+    // Atualiza a tarefa
     public Task updateTask(Long id, Task updatedTask) {
         Task existingTask = taskRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada com id: " + id));
 
         if (updatedTask.getTaskTitle() != null && !updatedTask.getTaskTitle().isEmpty()) {
-            existingTask.setTaskTitle(updatedTask.getTaskTitle()); // Check if task title is not null or empty
+            existingTask.setTaskTitle(updatedTask.getTaskTitle()); // Confere se o título da tarefa não é nulo ou vazio
         }
 
-        if (updatedTask.getTaskStatus() != null) { // Check if task status is not null
+        if (updatedTask.getTaskStatus() != null) { // Confere se o status da tarefa não é nulo
             existingTask.setTaskStatus(updatedTask.getTaskStatus());
         }
 
         if (updatedTask.getTaskGroup() != null) {
             boolean exists = taskGroupRepository.existsById(updatedTask.getTaskGroup().getTaskGroupId());
             if (!exists) {
-                throw new IllegalArgumentException("Task group does not valid");
+                throw new IllegalArgumentException("Grupo de tarefas não é válido");
             }
             existingTask.setTaskGroup(updatedTask.getTaskGroup());
         }
         return taskRepository.save(existingTask);
     }
 
-    // Delete the task and verify if it exists
+    // Deleta a task e verifica se ela existe
     public void deteteTask(Long taskId) {
         if (!taskRepository.existsById(taskId)) {
-            throw new IllegalArgumentException("Task not found with id: " + taskId);
+            throw new IllegalArgumentException("Tarefa não encontrada com id: " + taskId);
         }
         taskRepository.deleteById(taskId);
     }

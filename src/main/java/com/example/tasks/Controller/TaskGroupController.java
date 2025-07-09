@@ -26,18 +26,18 @@ public class TaskGroupController {
         return taskGroupService.getAllTaskGroups();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // Obtém o grupo de tarefas pelo ID
     public TaskGroup getTaskGroupById(@PathVariable Long id){
         return taskGroupService.getTaskServiceById(id);
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") // Atualiza o grupo de tarefas com o ID especificado
     public TaskGroup updateTaskGroup(@PathVariable Long id, @RequestBody TaskGroup updatedTaskGroup){
         return taskGroupService.updateTaskGroup(id, updatedTaskGroup);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // Deleta o grupo de tarefas com o ID especificado
     public void deleteTaskGroup(@PathVariable Long id){
         taskGroupService.deleteTaskGroup(id);
     }

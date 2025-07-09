@@ -27,17 +27,15 @@ public class TaskGroup {
 
     @Column(name = "task_group_name")
     @NotEmpty
-    @Size(min = 3, max = 100, message = "The name must be between 3 and 100 characters")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     private String taskGroupName;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
-    @JsonBackReference // Avoids infinite loop in JSON serialization
+    @JsonBackReference // Evita loop infinito na serialização JSON
     private Board board;
 
-    @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true) //
+    @OneToMany(mappedBy = "taskGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     @Column(name = "task_group_tasks")
     private List<Task> tasks = new ArrayList<>();
-
-    // Constructor for creating a TaskGroup with a board
 }
