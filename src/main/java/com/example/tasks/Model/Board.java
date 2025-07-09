@@ -34,7 +34,7 @@ public class Board {
     private String boardDescription;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference // Evita loop infinito na serialização JSON
     private List<TaskGroup> boardGroups = new ArrayList<>();
 
 }

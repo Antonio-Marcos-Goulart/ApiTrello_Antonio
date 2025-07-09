@@ -1,6 +1,7 @@
 package com.example.tasks.Model;
 
 import com.example.tasks.Controller.TaskGroupController;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,10 +19,9 @@ import lombok.Setter;
 @Table(name = "task")
 public class Task {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    @Column(name = "task_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera o ID automaticamente
     private Long taskId;
 
     @NotEmpty
@@ -39,7 +39,10 @@ public class Task {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "task_group_id")
+    @JsonBackReference // Evita loop infinito na serialização JSON
     private TaskGroup taskGroup;
+
+
 
     public Task(String name, String description, String status) {
     }

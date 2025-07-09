@@ -9,10 +9,11 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    private TaskGroupRepository taskGroupRepository = null;
+
+    private final TaskGroupRepository taskGroupRepository;
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, TaskGroupRepository taskGroupRepository) {
         this.taskRepository = taskRepository;
         this.taskGroupRepository = taskGroupRepository;
     }
@@ -35,27 +36,27 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    // Obtém a tarefa pelo ID
+    // Obtém uma tarefa pelo ID
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada com id: " + id));
     }
 
-    // Obtém todas as tarefas do banco de dados
+    // Obtém todas as tarefas
     public List<Task> getAllTasks() {
-        return taskRepository.findAll(); 
+        return taskRepository.findAll();
     }
 
-    // Atualiza a tarefa
+    // Obtém todas as tarefas de um grupo
     public Task updateTask(Long id, Task updatedTask) {
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada com id: " + id));
 
         if (updatedTask.getTaskTitle() != null && !updatedTask.getTaskTitle().isEmpty()) {
-            existingTask.setTaskTitle(updatedTask.getTaskTitle()); // Confere se o título da tarefa não é nulo ou vazio
+            existingTask.setTaskTitle(updatedTask.getTaskTitle());
         }
 
-        if (updatedTask.getTaskStatus() != null) { // Confere se o status da tarefa não é nulo
+        if (updatedTask.getTaskStatus() != null) {
             existingTask.setTaskStatus(updatedTask.getTaskStatus());
         }
 
@@ -66,15 +67,15 @@ public class TaskService {
             }
             existingTask.setTaskGroup(updatedTask.getTaskGroup());
         }
+
         return taskRepository.save(existingTask);
     }
 
-    // Deleta a task e verifica se ela existe
+    // Deleta uma tarefa pelo ID
     public void deteteTask(Long taskId) {
         if (!taskRepository.existsById(taskId)) {
             throw new IllegalArgumentException("Tarefa não encontrada com id: " + taskId);
         }
         taskRepository.deleteById(taskId);
     }
-
 }
