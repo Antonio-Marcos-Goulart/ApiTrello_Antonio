@@ -11,22 +11,22 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
-    public BoardController(BoardService boardService){
+    public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
 
     @PostMapping
-    public Board createBoard(@RequestBody Board board){
+    public Board createBoard(@RequestBody Board board) {
         return boardService.createBoard(board);
     }
 
     @GetMapping
-    public List<Board> getAllBoards(){
+    public List<Board> getAllBoards() {
         return boardService.getAllBoards();
     }
 
     @GetMapping("/{id}")
-    public Board getBoardById(@PathVariable Long id){
+    public Board getBoardById(@PathVariable Long id) {
         return boardService.getBoardById(id);
     }
 
@@ -34,9 +34,9 @@ public class BoardController {
     public Board updateBoard(@PathVariable Long id, @RequestBody Board updatedBoard) {
         return boardService.updateBoard(id, updatedBoard);
     }
-    
+
     @DeleteMapping("/{id}")
-    public void deleteBoard(@PathVariable Long id){
+    public void deleteBoard(@PathVariable Long id) {
         boardService.deleteBoard(id);
     }
 }
