@@ -4,6 +4,7 @@ package com.example.tasks.Service;
 import com.example.tasks.Model.Task;
 import com.example.tasks.Model.TaskGroup;
 import com.example.tasks.Model.TaskStatus;
+import com.example.tasks.Repository.TaskGroupRepository;
 import com.example.tasks.Repository.TaskRepository;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +20,10 @@ POREM ESTA FUNCIONANDO O TESTE
 public class TaskServiceTest {
 
     @Test
-    void returnTasksById(){
+    void returnTasksById() {
         TaskRepository taskRepo = mock(TaskRepository.class);
-        TaskService service = new TaskService(taskRepo);
+        TaskGroupRepository taskGroupRepo = mock(TaskGroupRepository.class);
+        TaskService service = new TaskService(taskRepo, taskGroupRepo);
 
         TaskGroup group = new TaskGroup();
         group.setTaskGroupId(1L);
@@ -43,4 +45,3 @@ public class TaskServiceTest {
         assertEquals("Test Group", result.getTaskGroup().getTaskGroupName());
     }
 }
-
