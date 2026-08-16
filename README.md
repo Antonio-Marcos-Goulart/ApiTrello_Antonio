@@ -33,24 +33,6 @@ Os dados são armazenados em banco de dados em memória **H2**, com persistênci
 
 ---
 
-## 🧱 Estrutura do Projeto
-
-src/
-├── main/
-│   ├── java/com/example/tasks/
-│   │   ├── controller/     # Endpoints REST
-│   │   ├── service/        # Regras de negócio
-│   │   ├── repository/     # Interface com o banco de dados
-│   │   ├── model/          # Entidades JPA
-│   │   ├── dto/            # (opcional) Objetos de transporte de dados
-│   │   └── TasksApplication.java
-│   └── resources/
-│       ├── application.properties
-├── test/
-│   ├── java/com/example/tasks/  # Testes automatizados
-
----
-
 ## 🔄 Relacionamento das Entidades
 
 - **Board**
